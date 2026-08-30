@@ -1,0 +1,12 @@
+.layout {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: min-content 1fr 4fr;
+  grid-template-areas:
+    'header header'
+    'stockContainer indicators'
+    'stockContainer tableau';
+  gap: 3px;
+}

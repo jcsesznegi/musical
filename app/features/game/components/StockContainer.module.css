@@ -1,0 +1,7 @@
+.stockContainer {
+  grid-area: stockContainer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}

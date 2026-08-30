@@ -1,0 +1,12 @@
+.tableauColumn {
+  position: relative;
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardItem + .cardItem {
+  margin-top: -73px;
+}

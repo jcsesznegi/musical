@@ -1,0 +1,20 @@
+.card {
+  background-color: #fff;
+  height: 88px;
+  width: 63px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: #000;
+  user-select: none;
+  border: 1px solid #ccc;
+}
+
+.hidden {
+  display: none;
+}
+
+.red {
+  color: red;
+}

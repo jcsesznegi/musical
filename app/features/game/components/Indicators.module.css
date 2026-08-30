@@ -1,0 +1,9 @@
+.indicators {
+  grid-area: indicators;
+  padding: 20px;
+}
+
+.cardList {
+  display: flex;
+  justify-content: space-around;
+}

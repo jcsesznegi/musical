@@ -1,0 +1,14 @@
+.stock {
+  width: 63px;
+  height: 88px;
+  border-radius: 5px;
+  outline: 2px dashed #04aa6d;
+}
+
+.cardList {
+  position: relative;
+}
+
+.cardItem {
+  position: absolute;
+}
