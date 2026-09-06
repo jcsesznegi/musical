@@ -1,13 +1,17 @@
-import styles from './Header.module.css';
+import styles from "./Header.module.css";
 
 type Props = {
+  title: string;
   onResetBtnClick: () => void;
 };
 
-export function Header({ onResetBtnClick }: Props) {
+export function Header({ title, onResetBtnClick }: Props) {
   return (
-    <div className={styles.header}>
-      <button type="button" onClick={onResetBtnClick}>Reset</button>
-    </div>
+    <header className={styles.header}>
+      <h1 className={styles.headerTitle}>{title}</h1>
+      <button type="button" onClick={onResetBtnClick}>
+        Reset
+      </button>
+    </header>
   );
 }

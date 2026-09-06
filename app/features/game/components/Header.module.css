@@ -2,5 +2,11 @@
   grid-area: header;
   padding: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.headerTitle {
+  font-size: 16px;
 }

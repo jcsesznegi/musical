@@ -1,11 +1,6 @@
-import {
-  useReducer,
-  useEffect,
-  useState,
-  useRef,
-  type MouseEvent,
-} from "react";
+import { useEffect, useState, useRef, type MouseEvent } from "react";
 import { reducer } from "./gameReducer";
+import { useThunkReducer } from "../../hooks/useThunkReducer";
 import {
   initGame,
   moveCardToWastepile,
@@ -34,7 +29,7 @@ const initialState = {
 };
 
 export function Game() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useThunkReducer(reducer, initialState);
   const [movingCardNumber, setMovingCardNumber] = useState<number | null>(null);
   const [movingCardCoordinates, setMovingCardCoordinates] = useState<{
     x: number;
@@ -107,7 +102,7 @@ export function Game() {
     <main>
       <Layout onMouseUp={handleMouseUp} onMouseMove={handleMouseMove}>
         {movingCard}
-        <Header onResetBtnClick={handleResetBtnClick} />
+        <Header title="Musical" onResetBtnClick={handleResetBtnClick} />
         <StockContainer>
           <Stock
             stock={state.stock}
