@@ -58,116 +58,115 @@ type Props = {
 };
 
 export function CardFace({ cardNumber }: Props) {
-  const cardFace = getCardFace(cardNumber);
-  return cardFace;
+  return getCardFace(cardNumber);
 }
 
 function getCardFace(cardNumber: number) {
   switch (cardNumber) {
     case 1:
-      return <img className={styles.image} src={Face1} />;
+      return <img draggable="false" className={styles.image} src={Face1} />;
     case 2:
-      return <img className={styles.image} src={Face2} />;
+      return <img draggable="false" className={styles.image} src={Face2} />;
     case 3:
-      return <img className={styles.image} src={Face3} />;
+      return <img draggable="false" className={styles.image} src={Face3} />;
     case 4:
-      return <img className={styles.image} src={Face4} />;
+      return <img draggable="false" className={styles.image} src={Face4} />;
     case 5:
-      return <img className={styles.image} src={Face5} />;
+      return <img draggable="false" className={styles.image} src={Face5} />;
     case 6:
-      return <img className={styles.image} src={Face6} />;
+      return <img draggable="false" className={styles.image} src={Face6} />;
     case 7:
-      return <img className={styles.image} src={Face7} />;
+      return <img draggable="false" className={styles.image} src={Face7} />;
     case 8:
-      return <img className={styles.image} src={Face8} />;
+      return <img draggable="false" className={styles.image} src={Face8} />;
     case 9:
-      return <img className={styles.image} src={Face9} />;
+      return <img draggable="false" className={styles.image} src={Face9} />;
     case 10:
-      return <img className={styles.image} src={Face10} />;
+      return <img draggable="false" className={styles.image} src={Face10} />;
     case 11:
-      return <img className={styles.image} src={Face11} />;
+      return <img draggable="false" className={styles.image} src={Face11} />;
     case 12:
-      return <img className={styles.image} src={Face12} />;
+      return <img draggable="false" className={styles.image} src={Face12} />;
     case 13:
-      return <img className={styles.image} src={Face13} />;
+      return <img draggable="false" className={styles.image} src={Face13} />;
     case 14:
-      return <img className={styles.image} src={Face14} />;
+      return <img draggable="false" className={styles.image} src={Face14} />;
     case 15:
-      return <img className={styles.image} src={Face15} />;
+      return <img draggable="false" className={styles.image} src={Face15} />;
     case 16:
-      return <img className={styles.image} src={Face16} />;
+      return <img draggable="false" className={styles.image} src={Face16} />;
     case 17:
-      return <img className={styles.image} src={Face17} />;
+      return <img draggable="false" className={styles.image} src={Face17} />;
     case 18:
-      return <img className={styles.image} src={Face18} />;
+      return <img draggable="false" className={styles.image} src={Face18} />;
     case 19:
-      return <img className={styles.image} src={Face19} />;
+      return <img draggable="false" className={styles.image} src={Face19} />;
     case 20:
-      return <img className={styles.image} src={Face20} />;
+      return <img draggable="false" className={styles.image} src={Face20} />;
     case 21:
-      return <img className={styles.image} src={Face21} />;
+      return <img draggable="false" className={styles.image} src={Face21} />;
     case 22:
-      return <img className={styles.image} src={Face22} />;
+      return <img draggable="false" className={styles.image} src={Face22} />;
     case 23:
-      return <img className={styles.image} src={Face23} />;
+      return <img draggable="false" className={styles.image} src={Face23} />;
     case 24:
-      return <img className={styles.image} src={Face24} />;
+      return <img draggable="false" className={styles.image} src={Face24} />;
     case 25:
-      return <img className={styles.image} src={Face25} />;
+      return <img draggable="false" className={styles.image} src={Face25} />;
     case 26:
-      return <img className={styles.image} src={Face26} />;
+      return <img draggable="false" className={styles.image} src={Face26} />;
     case 27:
-      return <img className={styles.image} src={Face27} />;
+      return <img draggable="false" className={styles.image} src={Face27} />;
     case 28:
-      return <img className={styles.image} src={Face28} />;
+      return <img draggable="false" className={styles.image} src={Face28} />;
     case 29:
-      return <img className={styles.image} src={Face29} />;
+      return <img draggable="false" className={styles.image} src={Face29} />;
     case 30:
-      return <img className={styles.image} src={Face30} />;
+      return <img draggable="false" className={styles.image} src={Face30} />;
     case 31:
-      return <img className={styles.image} src={Face31} />;
+      return <img draggable="false" className={styles.image} src={Face31} />;
     case 32:
-      return <img className={styles.image} src={Face32} />;
+      return <img draggable="false" className={styles.image} src={Face32} />;
     case 33:
-      return <img className={styles.image} src={Face33} />;
+      return <img draggable="false" className={styles.image} src={Face33} />;
     case 34:
-      return <img className={styles.image} src={Face34} />;
+      return <img draggable="false" className={styles.image} src={Face34} />;
     case 35:
-      return <img className={styles.image} src={Face35} />;
+      return <img draggable="false" className={styles.image} src={Face35} />;
     case 36:
-      return <img className={styles.image} src={Face36} />;
+      return <img draggable="false" className={styles.image} src={Face36} />;
     case 37:
-      return <img className={styles.image} src={Face37} />;
+      return <img draggable="false" className={styles.image} src={Face37} />;
     case 38:
-      return <img className={styles.image} src={Face38} />;
+      return <img draggable="false" className={styles.image} src={Face38} />;
     case 39:
-      return <img className={styles.image} src={Face39} />;
+      return <img draggable="false" className={styles.image} src={Face39} />;
     case 40:
-      return <img className={styles.image} src={Face40} />;
+      return <img draggable="false" className={styles.image} src={Face40} />;
     case 41:
-      return <img className={styles.image} src={Face41} />;
+      return <img draggable="false" className={styles.image} src={Face41} />;
     case 42:
-      return <img className={styles.image} src={Face42} />;
+      return <img draggable="false" className={styles.image} src={Face42} />;
     case 43:
-      return <img className={styles.image} src={Face43} />;
+      return <img draggable="false" className={styles.image} src={Face43} />;
     case 44:
-      return <img className={styles.image} src={Face44} />;
+      return <img draggable="false" className={styles.image} src={Face44} />;
     case 45:
-      return <img className={styles.image} src={Face45} />;
+      return <img draggable="false" className={styles.image} src={Face45} />;
     case 46:
-      return <img className={styles.image} src={Face46} />;
+      return <img draggable="false" className={styles.image} src={Face46} />;
     case 47:
-      return <img className={styles.image} src={Face47} />;
+      return <img draggable="false" className={styles.image} src={Face47} />;
     case 48:
-      return <img className={styles.image} src={Face48} />;
+      return <img draggable="false" className={styles.image} src={Face48} />;
     case 49:
-      return <img className={styles.image} src={Face49} />;
+      return <img draggable="false" className={styles.image} src={Face49} />;
     case 50:
-      return <img className={styles.image} src={Face50} />;
+      return <img draggable="false" className={styles.image} src={Face50} />;
     case 51:
-      return <img className={styles.image} src={Face51} />;
+      return <img draggable="false" className={styles.image} src={Face51} />;
     case 52:
-      return <img className={styles.image} src={Face52} />;
+      return <img draggable="false" className={styles.image} src={Face52} />;
     default:
       return null;
   }

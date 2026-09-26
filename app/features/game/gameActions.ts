@@ -10,8 +10,8 @@ export function initGame(): Action {
   return { type: types.INIT_GAME };
 }
 
-export function moveCardToWastepile(cardNumber: number): Action {
-  return { type: types.MOVE_CARD_TO_WASTEPILE, cardNumber };
+export function moveCardFromStockToWastepile(cardNumber: number): Action {
+  return { type: types.MOVE_CARD_FROM_STOCK_TO_WASTEPILE, cardNumber };
 }
 
 function checkForWin(): ThunkAction<Action> {
@@ -52,7 +52,7 @@ export function checkAndMoveCardToTableauColumn(
     }
 
     dispatch({
-      type: types.MOVE_CARD_TO_TABLEAU_COLUMN,
+      type: types.MOVE_CARD_FROM_STOCK_TO_TABLEAU_COLUMN,
       cardNumber,
       tableauColumnKey,
     });

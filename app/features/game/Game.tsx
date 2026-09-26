@@ -3,7 +3,7 @@ import { reducer } from "./gameReducer";
 import { useThunkReducer } from "../../hooks/useThunkReducer";
 import {
   initGame,
-  moveCardToWastepile,
+  moveCardFromStockToWastepile,
   checkAndMoveCardToTableauColumn,
 } from "./gameActions";
 import { doesCardIntersectElement } from "./helpers/index";
@@ -35,6 +35,10 @@ export function Game() {
     x: number;
     y: number;
   }>({ x: 0, y: 0 });
+  const [movingCardOffset, setMovingCardOffset] = useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
 
   const movingCardRef = useRef<HTMLDivElement | null>(null);
   const wastepileRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +53,16 @@ export function Game() {
     dispatch(initGame());
   };
 
-  const handleCardMouseDown = (cardNumber: number) => {
+  const handleCardMouseDown = (
+    e: MouseEvent<HTMLDivElement>,
+    cardNumber: number,
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xOffset = e.clientX - rect.left;
+    const yOffset = e.clientY - rect.top;
+
+    setMovingCardCoordinates({ x: e.clientX, y: e.clientY });
+    setMovingCardOffset({ x: xOffset, y: yOffset });
     setMovingCardNumber(cardNumber);
   };
 
@@ -68,7 +81,7 @@ export function Game() {
     if (movingCard && movingCardNumber) {
       switch (true) {
         case doesCardIntersectElement(movingCard, wastepile):
-          dispatch(moveCardToWastepile(movingCardNumber));
+          dispatch(moveCardFromStockToWastepile(movingCardNumber));
           break;
         case doesCardIntersectElement(movingCard, tableauColumn1):
           dispatch(checkAndMoveCardToTableauColumn(movingCardNumber, 1));
@@ -94,6 +107,7 @@ export function Game() {
     <MovingCard
       cardNumber={movingCardNumber}
       coordinates={movingCardCoordinates}
+      offset={movingCardOffset}
       ref={movingCardRef}
     />
   );
@@ -109,7 +123,12 @@ export function Game() {
             movingCardNumber={movingCardNumber}
             onCardMouseDown={handleCardMouseDown}
           />
-          <Wastepile wastepile={state.wastepile} ref={wastepileRef} />
+          <Wastepile
+            wastepile={state.wastepile}
+            ref={wastepileRef}
+            movingCardNumber={movingCardNumber}
+            onCardMouseDown={handleCardMouseDown}
+          />
         </StockContainer>
         <Indicators indicators={state.indicators} />
         <Tableau>

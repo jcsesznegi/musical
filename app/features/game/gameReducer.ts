@@ -14,9 +14,14 @@ type State = {
 
 export type Action =
   | { type: typeof types.INIT_GAME }
-  | { type: typeof types.MOVE_CARD_TO_WASTEPILE; cardNumber: number }
+  | { type: typeof types.MOVE_CARD_FROM_STOCK_TO_WASTEPILE; cardNumber: number }
   | {
-      type: typeof types.MOVE_CARD_TO_TABLEAU_COLUMN;
+      type: typeof types.MOVE_CARD_FROM_STOCK_TO_TABLEAU_COLUMN;
+      cardNumber: number;
+      tableauColumnKey: string;
+    }
+  | {
+      type: typeof types.MOVE_CARD_FROM_WASTEPILE_TO_TABLEAU_COLUMN;
       cardNumber: number;
       tableauColumnKey: string;
     };
@@ -26,7 +31,7 @@ export function reducer(state: State, action: Action) {
     case types.INIT_GAME: {
       return getInitialState();
     }
-    case types.MOVE_CARD_TO_WASTEPILE: {
+    case types.MOVE_CARD_FROM_STOCK_TO_WASTEPILE: {
       return {
         ...state,
         stock: [...state.stock].filter(
@@ -35,17 +40,34 @@ export function reducer(state: State, action: Action) {
         wastepile: [...state.wastepile, action.cardNumber],
       };
     }
-    case types.MOVE_CARD_TO_TABLEAU_COLUMN: {
+    case types.MOVE_CARD_FROM_STOCK_TO_TABLEAU_COLUMN: {
       const targetColumn = state[action.tableauColumnKey as keyof State];
       if (!Array.isArray(targetColumn)) return state;
 
       return {
         ...state,
-        stock: [...state.stock].filter(
-          (cardNumber) => cardNumber !== action.cardNumber,
-        ),
+        stock: filterCardFromCardList([...state.stock], action.cardNumber),
         [action.tableauColumnKey]: [...targetColumn, action.cardNumber],
       };
     }
+    case types.MOVE_CARD_FROM_WASTEPILE_TO_TABLEAU_COLUMN: {
+      const targetColumn = state[action.tableauColumnKey as keyof State];
+      if (!Array.isArray(targetColumn)) return state;
+
+      return {
+        ...state,
+        stock: filterCardFromCardList([...state.stock], action.cardNumber),
+        [action.tableauColumnKey]: [...targetColumn, action.cardNumber],
+      };
+    }
+    default: {
+      return state;
+    }
   }
+}
+
+function filterCardFromCardList(cardList: number[], cardNumber: number) {
+  return cardList.filter(
+    (currentCardNumber) => currentCardNumber !== cardNumber,
+  );
 }

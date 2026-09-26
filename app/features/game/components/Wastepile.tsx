@@ -1,3 +1,4 @@
+import { type MouseEvent } from "react";
 import { type RefObject } from "react";
 import { Card } from "./Card";
 import styles from "./Wastepile.module.css";
@@ -5,13 +6,28 @@ import styles from "./Wastepile.module.css";
 type Props = {
   wastepile: number[];
   ref: RefObject<HTMLDivElement | null>;
+  movingCardNumber: number | null;
+  onCardMouseDown: (e: MouseEvent<HTMLDivElement>, cardNumber: number) => void;
 };
 
-export function Wastepile({ wastepile, ref }: Props) {
-  const cards = wastepile.map((cardNumber) => {
+export function Wastepile({
+  wastepile,
+  ref,
+  movingCardNumber,
+  onCardMouseDown,
+}: Props) {
+  const cards = wastepile.map((cardNumber, index) => {
+    const isHidden = cardNumber === movingCardNumber;
+    const onMouseDown =
+      index === wastepile.length - 1 ? onCardMouseDown : undefined;
+
     return (
       <li key={cardNumber} className={styles.cardItem}>
-        <Card cardNumber={cardNumber} />
+        <Card
+          cardNumber={cardNumber}
+          isHidden={isHidden}
+          onMouseDown={onMouseDown}
+        />
       </li>
     );
   });
