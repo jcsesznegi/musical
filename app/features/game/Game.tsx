@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef, type MouseEvent } from "react";
+import { useUI } from "../../context/UIContext";
 import { reducer } from "./gameReducer";
+import { INITIAL_REDEAL_COUNT } from "./constants/game";
 import { useThunkReducer } from "../../hooks/useThunkReducer";
 import {
   initGame,
@@ -18,7 +20,8 @@ import { TableauColumn } from "./components/TableauColumn";
 import { MovingCard } from "./components/MovingCard";
 
 const initialState = {
-  redealsRemaining: 2,
+  result: null,
+  redealsRemaining: INITIAL_REDEAL_COUNT,
   stock: [],
   wastepile: [],
   indicators: [],
@@ -39,6 +42,10 @@ export function Game() {
     x: number;
     y: number;
   }>({ x: 0, y: 0 });
+  const [movingCardOriginKey, setMovingCardOriginKey] = useState<
+    "stock" | "wastepile" | null
+  >(null);
+  const { showDialog } = useUI();
 
   const movingCardRef = useRef<HTMLDivElement | null>(null);
   const wastepileRef = useRef<HTMLDivElement | null>(null);
@@ -49,13 +56,26 @@ export function Game() {
 
   useEffect(() => dispatch(initGame()), []);
 
-  const handleResetBtnClick = () => {
+  useEffect(() => {
+    if (state.result === "win") {
+      showDialog("You Win!", "Play another game?", () => {
+        dispatch(initGame());
+      });
+    } else if (state.result === "lose") {
+      showDialog("You Lose", "Play another game?", () => {
+        dispatch(initGame());
+      });
+    }
+  }, [state.result]);
+
+  const handleResetButtonClick = () => {
     dispatch(initGame());
   };
 
   const handleCardMouseDown = (
     e: MouseEvent<HTMLDivElement>,
     cardNumber: number,
+    cardOriginKey: "stock" | "wastepile",
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const xOffset = e.clientX - rect.left;
@@ -64,6 +84,7 @@ export function Game() {
     setMovingCardCoordinates({ x: e.clientX, y: e.clientY });
     setMovingCardOffset({ x: xOffset, y: yOffset });
     setMovingCardNumber(cardNumber);
+    setMovingCardOriginKey(cardOriginKey);
   };
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -78,22 +99,47 @@ export function Game() {
     const tableauColumn3 = tableauColumn3Ref.current;
     const tableauColumn4 = tableauColumn4Ref.current;
 
-    if (movingCard && movingCardNumber) {
+    if (movingCard && movingCardNumber && movingCardOriginKey) {
       switch (true) {
-        case doesCardIntersectElement(movingCard, wastepile):
+        case doesCardIntersectElement(movingCard, wastepile) &&
+          movingCardOriginKey === "stock":
           dispatch(moveCardFromStockToWastepile(movingCardNumber));
           break;
         case doesCardIntersectElement(movingCard, tableauColumn1):
-          dispatch(checkAndMoveCardToTableauColumn(movingCardNumber, 1));
+          dispatch(
+            checkAndMoveCardToTableauColumn(
+              movingCardNumber,
+              movingCardOriginKey,
+              1,
+            ),
+          );
           break;
         case doesCardIntersectElement(movingCard, tableauColumn2):
-          dispatch(checkAndMoveCardToTableauColumn(movingCardNumber, 2));
+          dispatch(
+            checkAndMoveCardToTableauColumn(
+              movingCardNumber,
+              movingCardOriginKey,
+              2,
+            ),
+          );
           break;
         case doesCardIntersectElement(movingCard, tableauColumn3):
-          dispatch(checkAndMoveCardToTableauColumn(movingCardNumber, 3));
+          dispatch(
+            checkAndMoveCardToTableauColumn(
+              movingCardNumber,
+              movingCardOriginKey,
+              3,
+            ),
+          );
           break;
         case doesCardIntersectElement(movingCard, tableauColumn4):
-          dispatch(checkAndMoveCardToTableauColumn(movingCardNumber, 4));
+          dispatch(
+            checkAndMoveCardToTableauColumn(
+              movingCardNumber,
+              movingCardOriginKey,
+              4,
+            ),
+          );
           break;
         default:
           break;
@@ -116,7 +162,11 @@ export function Game() {
     <main>
       <Layout onMouseUp={handleMouseUp} onMouseMove={handleMouseMove}>
         {movingCard}
-        <Header title="Musical" onResetBtnClick={handleResetBtnClick} />
+        <Header
+          title="Musical"
+          redealsRemaining={state.redealsRemaining}
+          onResetButtonClick={handleResetButtonClick}
+        />
         <StockContainer>
           <Stock
             stock={state.stock}

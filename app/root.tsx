@@ -6,6 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { UIProvider, useUI } from "./context/UIContext";
+import { Alert } from "./components/Alert";
+import { Dialog } from "./components/Dialog";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -25,19 +28,33 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
+    <UIProvider>
+      <html lang="en">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <GlobalOverlays>{children}</GlobalOverlays>
+          <ScrollRestoration />
+          <Scripts />
+        </body>
+      </html>
+    </UIProvider>
+  );
+}
+
+function GlobalOverlays({ children }: { children: React.ReactNode }) {
+  const { alert, closeAlert, dialog, closeDialog } = useUI();
+
+  return (
+    <>
+      {children}
+      {alert && <Alert alert={alert} close={closeAlert} />}
+      {dialog && <Dialog dialog={dialog} close={closeDialog} />}
+    </>
   );
 }
 

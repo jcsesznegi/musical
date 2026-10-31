@@ -1,1 +1,1 @@
-export const INITIAL_REDEAL_COUNT = 2;
+export const INITIAL_REDEAL_COUNT = 0;

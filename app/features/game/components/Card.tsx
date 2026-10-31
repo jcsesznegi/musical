@@ -9,7 +9,7 @@ type Props = {
   isHidden?: boolean;
   isFaceDown?: boolean;
   isFlipping?: boolean;
-  cardInnerRef: RefObject<HTMLDivElement | null>;
+  cardInnerRef?: RefObject<HTMLDivElement | null>;
   onMouseDown?: (e: MouseEvent<HTMLDivElement>, cardNumber: number) => void;
 };
 

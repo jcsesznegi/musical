@@ -1,0 +1,10 @@
+.overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); display: grid; place-items: center; z-index: 2000 }
+
+.dialog { background: var(--color-rose-white); padding: 20px 30px; border-radius: 8px; color: var(--color-crow-black); display: flex; flex-direction: column; gap: 20px; text-align: center; }
+
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.footer { display: flex; align-items: center; justify-content: center; gap: 20px; }

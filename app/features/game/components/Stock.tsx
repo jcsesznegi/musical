@@ -5,7 +5,11 @@ import styles from "./Stock.module.css";
 type Props = {
   stock: number[];
   movingCardNumber: number | null;
-  onCardMouseDown: (e: MouseEvent<HTMLDivElement>, cardNumber: number) => void;
+  onCardMouseDown: (
+    e: MouseEvent<HTMLDivElement>,
+    cardNumber: number,
+    cardOriginKey: "stock" | "wastepile",
+  ) => void;
 };
 
 export function Stock({ stock, movingCardNumber, onCardMouseDown }: Props) {
@@ -17,6 +21,13 @@ export function Stock({ stock, movingCardNumber, onCardMouseDown }: Props) {
     if (event.propertyName === "transform") {
       setIsLastCardFlipped(true);
     }
+  };
+
+  const handleCardMouseDown = (
+    event: MouseEvent<HTMLDivElement>,
+    cardNumber: number,
+  ) => {
+    return onCardMouseDown(event, cardNumber, "stock");
   };
 
   useEffect(() => {
@@ -41,7 +52,7 @@ export function Stock({ stock, movingCardNumber, onCardMouseDown }: Props) {
     const isHidden = cardNumber === movingCardNumber;
     const isFaceDown = !isLastCard || !isLastCardFlipped;
     const isFlipping = isLastCard && !isLastCardFlipped;
-    const onMouseDown = isLastCard ? onCardMouseDown : undefined;
+    const onMouseDown = isLastCard ? handleCardMouseDown : undefined;
 
     return (
       <li key={cardNumber} className={styles.cardItem}>

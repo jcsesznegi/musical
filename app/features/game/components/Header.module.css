@@ -5,8 +5,13 @@
   justify-content: space-between;
   align-items: center;
   user-select: none;
+  color: var(--color-crow-black);
 }
 
 .headerTitle {
   font-size: 16px;
+}
+
+.redealsRemaining {
+  font-size: 14px;
 }

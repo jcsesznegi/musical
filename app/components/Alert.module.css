@@ -1,0 +1,5 @@
+.overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); display: grid; place-items: center; z-index: 10000 }
+
+.alert { background: var(--color-rose-white); padding: 20px 30px; border-radius: 8px; color: var(--color-crow-black); box-shadow: 0 4px 12px rgba(0;0;0;0.15); text-align: center; }
+
+.footer { display: flex; align-items: center; justify-content: center;}

@@ -7,7 +7,11 @@ type Props = {
   wastepile: number[];
   ref: RefObject<HTMLDivElement | null>;
   movingCardNumber: number | null;
-  onCardMouseDown: (e: MouseEvent<HTMLDivElement>, cardNumber: number) => void;
+  onCardMouseDown: (
+    e: MouseEvent<HTMLDivElement>,
+    cardNumber: number,
+    cardOriginKey: "stock" | "wastepile",
+  ) => void;
 };
 
 export function Wastepile({
@@ -16,10 +20,17 @@ export function Wastepile({
   movingCardNumber,
   onCardMouseDown,
 }: Props) {
+  const handleCardMouseDown = (
+    event: MouseEvent<HTMLDivElement>,
+    cardNumber: number,
+  ) => {
+    return onCardMouseDown(event, cardNumber, "wastepile");
+  };
+
   const cards = wastepile.map((cardNumber, index) => {
     const isHidden = cardNumber === movingCardNumber;
     const onMouseDown =
-      index === wastepile.length - 1 ? onCardMouseDown : undefined;
+      index === wastepile.length - 1 ? handleCardMouseDown : undefined;
 
     return (
       <li key={cardNumber} className={styles.cardItem}>

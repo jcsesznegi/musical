@@ -23,3 +23,8 @@ main {
   width: 100vw;
   height: 100vh;
 }
+
+:root {
+  --color-rose-white: #fffafa;
+  --color-crow-black: #0d0907;
+}

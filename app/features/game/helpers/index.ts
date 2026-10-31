@@ -2,7 +2,8 @@ import { CARD_NUMBERS } from "../constants/cards";
 import { INITIAL_REDEAL_COUNT } from "../constants/game";
 import { shuffleArray, getCardValue } from "../../../utils/index";
 
-export function getInitialState() {
+export function initGame() {
+  const result = null;
   const redealsRemaining = INITIAL_REDEAL_COUNT;
   const stock: number[] = shuffleArray(CARD_NUMBERS);
   const wastepile: number[] = [];
@@ -39,6 +40,7 @@ export function getInitialState() {
   const tableauColumn4 = stock.splice(base4Index, 1);
 
   return {
+    result,
     redealsRemaining,
     stock,
     wastepile,
@@ -68,14 +70,13 @@ export function doesCardIntersectElement(
 }
 
 export function getNextBuildableCards(
-  stock: number[],
   currentCards: number[],
   interval: number,
 ) {
-  const lastCardValue = getCardValue(currentCards[currentCards.length - 1]);
-  const nextCardValue = lastCardValue + interval;
+  const lastCard = currentCards[currentCards.length - 1];
+  const nextCardValue = getCardValue(lastCard + interval);
 
-  return stock.filter((currentCardNumber) => {
+  return [...CARD_NUMBERS].filter((currentCardNumber) => {
     const currentCardValue = getCardValue(currentCardNumber);
 
     return currentCardValue === nextCardValue;

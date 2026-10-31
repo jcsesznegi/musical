@@ -10,11 +10,15 @@ export function initGame(): Action {
   return { type: types.INIT_GAME };
 }
 
-export function moveCardFromStockToWastepile(cardNumber: number): Action {
-  return { type: types.MOVE_CARD_FROM_STOCK_TO_WASTEPILE, cardNumber };
+function redeal(): Action {
+  return { type: types.REDEAL };
 }
 
-function checkForWin(): ThunkAction<Action> {
+function setResult(result: "win" | "lose"): Action {
+  return { type: types.SET_RESULT, result };
+}
+
+function checkEndConditions(): ThunkAction<Action> {
   return (dispatch, getState) => {
     const state = getState();
     const tableauColumn1 = state.tableauColumn1;
@@ -28,21 +32,46 @@ function checkForWin(): ThunkAction<Action> {
       isTableauColumnComplete(tableauColumn3, 3) &&
       isTableauColumnComplete(tableauColumn4, 4)
     ) {
-      alert("You Win!");
+      return dispatch(setResult("win"));
     }
+
+    const stock = state.stock;
+    const redealsRemaining = state.redealsRemaining;
+
+    if (stock.length === 0) {
+      if (redealsRemaining > 0) {
+        return dispatch(redeal());
+      }
+      return dispatch(setResult("lose"));
+    }
+
+    return Promise.resolve();
+  };
+}
+
+export function moveCardFromStockToWastepile(
+  cardNumber: number,
+): ThunkAction<Action> {
+  return async (dispatch, getState) => {
+    await dispatch({
+      type: types.MOVE_CARD_FROM_STOCK_TO_WASTEPILE,
+      cardNumber,
+    });
+
+    return dispatch(checkEndConditions());
   };
 }
 
 export function checkAndMoveCardToTableauColumn(
   cardNumber: number,
+  cardOriginKey: "stock" | "wastepile",
   tableauColumnNumber: number,
 ): ThunkAction<Action> {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState();
     const tableauColumnKey = `tableauColumn${tableauColumnNumber}`;
     const targetColumn = state[tableauColumnKey];
     const nextBuildableCards = getNextBuildableCards(
-      state.stock,
       [...targetColumn],
       tableauColumnNumber,
     );
@@ -51,12 +80,13 @@ export function checkAndMoveCardToTableauColumn(
       return Promise.reject();
     }
 
-    dispatch({
-      type: types.MOVE_CARD_FROM_STOCK_TO_TABLEAU_COLUMN,
+    await dispatch({
+      type: types.MOVE_CARD_TO_TABLEAU_COLUMN,
       cardNumber,
+      cardOriginKey,
       tableauColumnKey,
     });
 
-    dispatch(checkForWin());
+    return dispatch(checkEndConditions());
   };
 }
